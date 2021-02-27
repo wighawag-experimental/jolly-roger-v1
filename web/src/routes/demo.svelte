@@ -81,11 +81,13 @@
       <div>Error: {$messages.error}</div>
     {:else if $messages.state === 'Fetching'}
       <div>Loading Messages...</div>
+    {:else if !$messages.data}
+      <div>Error: Could Not Get Messages</div>
     {:else}
       {#each $messages.data as message, index}
         <!-- <Blockie address={name.id} /> -->
         <div
-          class={`flex flex-wrap items-center -mx-2 ${$wallet.address && message.id.toLowerCase() === $wallet.address.toLowerCase() ? 'font-bold' : 'font-normal'}`}>
+          class={`flex flex-wrap items-center -mx-2 ${$wallet.address && message.id.toLowerCase() === $wallet.address.toLowerCase() ? 'font-bold' : 'font-normal'} dark:text-white`}>
           <!-- <div class="px-2 mb-6">
             <h2 class="text-xl">{`${name.id.slice(0, 4)}...${name.id.slice(name.id.length - 4)}`} :</h2>
           </div> -->
