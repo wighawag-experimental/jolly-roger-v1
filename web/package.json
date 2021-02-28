@@ -11,17 +11,13 @@
     "@ethersproject/solidity": "^5.0.7",
     "@ethersproject/wallet": "^5.0.7",
     "@hickory/browser": "^2.1.0",
-    "@urql/core": "^1.12.3",
-    "@urql/devtools": "^2.0.2",
-    "graphql": "^15.3.0",
     "jolly-roger-common": "workspace:*",
     "named-logs": "0.0.13",
     "named-logs-console": "0.0.14",
     "svelte": "^3.24.0",
     "web3w": "^0.2.42",
     "web3w-torus-loader": "^0.2.4",
-    "web3w-walletconnect-loader": "^0.2.0",
-    "wonka": "^4.0.14"
+    "web3w-walletconnect-loader": "^0.2.0"
   },
   "devDependencies": {
     "@curi/types": "^2.0.2",

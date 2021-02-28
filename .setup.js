@@ -22,8 +22,6 @@ function writeIfNotExists(p, content) {
   '.env.staging',
   'contracts/.vscode/settings.json',
   'common-lib/.vscode/settings.json',
-  'subgraph/.vscode/settings.json',
-  'subgraph/.env',
   'web/.vscode/settings.json',
 ].map(copyFromDefault);
 

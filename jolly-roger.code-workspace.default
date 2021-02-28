@@ -7,9 +7,6 @@
       "path": "common-lib"
     },
     {
-      "path": "subgraph"
-    },
-    {
       "path": "web"
     },
     {

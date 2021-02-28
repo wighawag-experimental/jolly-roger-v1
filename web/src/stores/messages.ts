@@ -1,137 +1,66 @@
-import {derived, Readable} from 'svelte/store';
-import type {TransactionStore} from 'web3w';
-import type {
-  Invalidator,
-  Subscriber,
-  Unsubscriber,
-} from 'web3w/dist/esm/utils/internals';
-import {QueryState, QueryStore, queryStore} from '../lib/graphql';
-import {transactions} from './wallet';
+import {chain, fallback, wallet} from './wallet';
+import {BaseStore} from '../lib/utils/stores';
+import {blockTime} from '../config';
+import type {WalletStore} from 'web3w';
 
-type Messages = {
+type Message = {
   id: string;
   message: string;
-  timestamp: string;
   pending: boolean;
-}[];
-
-// TODO web3w needs to export the type
-type TransactionStatus =
-  | 'pending'
-  | 'cancelled'
-  | 'success'
-  | 'failure'
-  | 'mined';
-type TransactionRecord = {
-  hash: string;
-  from: string;
-  submissionBlockTime: number;
-  acknowledged: boolean;
-  status: TransactionStatus;
-  nonce: number;
-  confirmations: number;
-  finalized: boolean;
-  lastAcknowledgment?: TransactionStatus;
-  to?: string;
-  gasLimit?: string;
-  gasPrice?: string;
-  data?: string;
-  value?: string;
-  contractName?: string;
-  method?: string;
-  args?: unknown[];
-  eventsABI?: unknown; // TODO
-  metadata?: unknown;
-  lastCheck?: number;
-  blockHash?: string;
-  blockNumber?: number;
-  events?: unknown[]; // TODO
+  state: 'Loading' | 'Idle' | 'Ready';
+  error?: any;
 };
 
-class MessagesStore implements QueryStore<Messages> {
-  private store: Readable<QueryState<Messages>>;
-  constructor(
-    private query: QueryStore<Messages>,
-    private transactions: TransactionStore
-  ) {
-    this.store = derived([this.query, this.transactions], (values) =>
-      this.update(values)
-    ); // lambda ensure update is not bound and can be hot swapped on HMR
+class MessageStore extends BaseStore<Message> {
+  private interval: NodeJS.Timeout | undefined;
+  constructor(private wallet: WalletStore) {
+    super({
+      id: '',
+      message: '',
+      pending: false,
+      state: 'Idle',
+    });
+
+    // wallet.subscribe(($wallet) => {});
   }
 
-  update([$query, $transactions]: [
-    QueryState<Messages>,
-    TransactionRecord[]
-  ]): QueryState<Messages> {
-    if (!$query.data) {
-      return $query;
-    } else {
-      let newData = $query.data.concat();
-      for (const tx of $transactions) {
-        if (!tx.finalized && tx.args) {
-          // based on args : so need to ensure args are available
-          if (tx.status != 'cancelled' && tx.status !== 'failure') {
-            const foundIndex = newData.findIndex(
-              (v) => v.id.toLowerCase() === tx.from.toLowerCase()
-            );
-            if (foundIndex >= 0) {
-              newData[foundIndex].message = tx.args[0] as string;
-              newData[foundIndex].pending = tx.confirmations < 1;
-              newData[foundIndex].timestamp = Math.floor(
-                Date.now() / 1000
-              ).toString();
-            } else {
-              newData.unshift({
-                id: tx.from.toLowerCase(),
-                message: tx.args[0] as string,
-                timestamp: Math.floor(Date.now() / 1000).toString(),
-                pending: tx.confirmations < 1,
-              });
-            }
-          }
-        }
+  private async _fetch(walletAddress: string | undefined) {
+    if (!walletAddress) {
+      this.setPartial({message: '', pending: false, state: 'Idle'});
+      return;
+    }
+    const contracts = chain.contracts || fallback.contracts;
+    if (contracts) {
+      if (this.$store.state === 'Idle') {
+        this.setPartial({state: 'Loading'});
       }
-      newData = newData.sort(
-        (a, b) => parseInt(b.timestamp) - parseInt(a.timestamp)
-      );
-      return {
-        state: $query.state,
-        error: $query.error,
-        polling: $query.polling,
-        stale: $query.stale,
-        data: newData, //[{id: '0x37373737373737373737373737737373', message: 'dsdsd', pending: true, timestamp: "1"}],
-      };
+      const message = await contracts.GreetingsRegistry.messages(walletAddress);
+      this.set({message, pending: false, state: 'Ready', id: walletAddress});
+    } else if (fallback.state === 'Ready') {
+      this.setPartial({error: new Error('no contracts to fetch with')});
+    } else {
+      if (this.$store.state === 'Idle') {
+        this.setPartial({state: 'Loading'});
+      }
+      console.log('waiting to be connected to a chain...');
     }
   }
 
-  fetch(): QueryStore<Messages> | void {
-    return this.query.fetch();
+  fetch(): void {
+    this.interval = setInterval(
+      () => this._fetch(this.wallet.address),
+      1000 * blockTime
+    );
   }
   cancel() {
-    return this.query.cancel();
+    if (this.interval) {
+      clearInterval(this.interval);
+      this.interval = undefined;
+    }
   }
   acknowledgeError() {
-    return this.query.acknowledgeError();
-  }
-
-  subscribe(
-    run: Subscriber<QueryState<Messages>>,
-    invalidate?: Invalidator<QueryState<Messages>> | undefined
-  ): Unsubscriber {
-    return this.store.subscribe(run, invalidate);
+    this.setPartial({error: undefined});
   }
 }
 
-const query = queryStore<Messages>(
-  `
-query {
-  messageEntries(orderBy: timestamp, orderDirection: desc, first: 10) {
-    id
-    message
-    timestamp
-  }
-}`,
-  {transform: 'messageEntries'} // allow to access messages directly
-);
-
-export const messages = new MessagesStore(query, transactions);
+export const messages = new MessageStore(wallet);

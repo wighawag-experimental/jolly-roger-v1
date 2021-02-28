@@ -2,7 +2,7 @@
 
 # Jolly Roger
 
-This is a template to build a decentralised applicaiton using ethereum, hardhat, svelte and thegraph
+This is a template to build a decentralised applicaiton using ethereum, hardhat and svelte
 
 to make an app out of it, execute the following
 
@@ -36,12 +36,6 @@ npx pnpm add -g pnpm
 You might be able to switch to `yarn` but will most likely have to configure it to fix hoisting issues.
 If you decide to use `yarn` you ll have to remove the script "preinstall" that by default force the use of `pnpm`
 
-### docker and docker-compose
-
-`docker` and `docker-compose` are used to setup the external services (an ethereum node, an ipfs node and a [subgraph](https://thegraph.com) node)
-
-If you prefer (or do not have access to docker/docker-compose) you can run them independently.
-
 ## intall dependencies :
 
 ```bash
@@ -74,27 +68,9 @@ If you need some other terminal to execute the separate processes, you can confi
 
 This command will bring 5 shells up
 
-1. docker-compose: running the ethereum node, ipfs node and subgraph node.
 2. common-lib: watching for changes and recompiling to js.
 3. web app: watching for changes. Hot Module Replacement enabled. (will reload on common-lib changes)
 4. contracts: watching for changes. For every code changes, contract are redeployed, with proxies keeping their addresses.
-5. subgraph: watch for code or template changes and redeploy.
-
-Once docker-compose is running, you can stop the other shells and restart them if needed via
-
-```bash
-pnpm shell:dev
-```
-
-Alternatively you can call the following first : this will setup the external services only (ipfs, ethereum and graph nodes)
-
-```bash
-pnpm externals
-```
-
-and then run `pnpm shell:dev` to bring up the rest in watch mode.
-
-You can also always run them individually
 
 You can also run them all in one process : `pnpm start` (no separate terminal window/tab) but this means all the log output is in the same window.
 
@@ -114,7 +90,6 @@ pnpm production:web:build
 
 You need to gather the following environment variables :
 
-- `THEGRAPH_TOKEN=<graph token used to deploy the subgraph on thegraph.com>`
 - `INFURA_TOKEN=<infura token to talk to a network>`
 - `IPFS_DEPLOY_PINATA__API_KEY=<pinata api key>`
 - `IPFS_DEPLOY_PINATA__SECRET_API_KEY=<pinata secret key>`
@@ -128,11 +103,7 @@ You can remove the env if you want to use the same as the one in `.env`
 
 You'll also need to update the following for staging and production :
 
-- `SUBGRAPH_NAME=<thegraph account name>/<subgraph name>`
 - `SNOWPACK_PUBLIC_CHAIN_ID=<id of the chain where contracts lives>`
-- `SNOWPACK_PUBLIC_THE_GRAPH_HTTP=https://api.thegraph.com/subgraphs/name/<thegraph account name>/<subgraph name>`
-
-you then need to ensure you have a subgraph already created on thegraph.com with that name: https://thegraph.com/explorer/dashboard
 
 Furthermore, you need to ensure the values in [web/application.json](web/application.json) are to your liking. Similar for the the web/public/preview.png image that is used for open graph metadata. The application.json is also where you setup the ens name if any.
 

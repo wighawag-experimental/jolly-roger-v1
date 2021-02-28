@@ -54,27 +54,25 @@
 <slot />
 
 {#if $chain.state === 'Idle' && !$chain.connecting && $fallback.state === 'Idle' && !$fallback.connecting}
-  <!-- Not Used Here: No need of node connection -->
-  <!-- <div
+  <div
     class="w-full flex items-center justify-center fixed top-0 pointer-events-none"
     style="z-index: 5;">
     <p
       class="w-64 text-center rounded-bl-xl rounded-br-xl text-gray-200 bg-pink-600 p-1">
       Please Connect.
     </p>
-  </div> -->
+  </div>
 {:else if $chain.state === 'Idle' && !$chain.connecting && $fallback.error}
-  <!-- Not Used Here: No need of node connection, we should check thegraph connection instead -->
-  <!-- <div
+  <div
     class="w-full flex items-center justify-center fixed top-0 pointer-events-none"
     style="z-index: 5;">
     <p
       class="w-64 text-center rounded-bl-xl rounded-br-xl text-gray-200 bg-pink-600 p-1">
       Network Issues, Please Connect.
     </p>
-  </div> -->
+  </div>
 {:else if $chain.notSupported}
-  <div
+  <!-- <div
     class="w-full flex items-center justify-center fixed top-0 pointer-events-none"
     style="z-index: 5;">
     <p
@@ -82,7 +80,7 @@
       Wrong network, use
       {chainName}
     </p>
-  </div>
+  </div> -->
 {/if}
 
 {#if $flow.inProgress}

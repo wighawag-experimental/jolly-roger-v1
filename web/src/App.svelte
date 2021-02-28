@@ -18,9 +18,7 @@
 
 <Install />
 <NewVersionNotification />
-<Router
-  {routes}
-  globalQueryStrings={['subgraph', 'debug', 'log', 'trace', '_d_eruda']}>
+<Router {routes} globalQueryStrings={['debug', 'log', 'trace', '_d_eruda']}>
   <Notifications />
   <NavBar
     links={[{name: 'index', title: 'Home'}, {name: 'demo', title: 'Demo'}]} />

@@ -75,35 +75,28 @@
 </symbol>
 <WalletAccess>
   <section class="py-8 px-4">
-    {#if !$messages.state}
-      <div>Messages not loaded</div>
+    {#if $messages.state == 'Idle'}
+      <div>Waiting to get connected...</div>
     {:else if $messages.error}
       <div>Error: {$messages.error}</div>
-    {:else if $messages.state === 'Fetching'}
+    {:else if $messages.state === 'Loading'}
       <div>Loading Messages...</div>
-    {:else if !$messages.data}
-      <div>Error: Could Not Get Messages</div>
     {:else}
-      {#each $messages.data as message, index}
-        <!-- <Blockie address={name.id} /> -->
-        <div
-          class={`flex flex-wrap items-center -mx-2 ${$wallet.address && message.id.toLowerCase() === $wallet.address.toLowerCase() ? 'font-bold' : 'font-normal'} dark:text-white`}>
-          <!-- <div class="px-2 mb-6">
-            <h2 class="text-xl">{`${name.id.slice(0, 4)}...${name.id.slice(name.id.length - 4)}`} :</h2>
-          </div> -->
-          <Blockie address={message.id} class="m-1" />
-          <span class="px-2">
-            <p>
-              {message.message}
-              {#if message.pending}
-                <svg
-                  class="fill-current animate-spin inline h-4 w-4 dark:text-white"><use
-                    xlink:href="#icon-spinner6" /></svg>
-              {/if}
-            </p>
-          </span>
-        </div>
-      {/each}
+      <!-- <Blockie address={name.id} /> -->
+      <div
+        class={`flex flex-wrap items-center -mx-2 font-bold dark:text-white`}>
+        <Blockie address={$messages.id} class="m-1" />
+        <span class="px-2">
+          <p>
+            {$messages.message}
+            {#if $messages.pending}
+              <svg
+                class="fill-current animate-spin inline h-4 w-4 dark:text-white"><use
+                  xlink:href="#icon-spinner6" /></svg>
+            {/if}
+          </p>
+        </span>
+      </div>
     {/if}
   </section>
 
@@ -135,6 +128,17 @@
           disabled={$wallet.unlocking || $chain.connecting}
           on:click={() => wallet.disconnect()}>
           Disconnect
+        </NavButton>
+      </div>
+    </form>
+  {:else}
+    <form class="mt-5 w-full max-w-sm">
+      <div class="flex items-center">
+        <NavButton
+          label="Disconnect"
+          disabled={$wallet.unlocking || $chain.connecting}
+          on:click={() => flow.connect()}>
+          Connect
         </NavButton>
       </div>
     </form>

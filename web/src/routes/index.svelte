@@ -63,9 +63,8 @@
     <div class="max-w-xl mx-auto px-4 sm:px-6 lg:max-w-screen-xl lg:px-8">
       <div class="lg:grid lg:grid-cols-3 lg:gap-8">
         <Feature title="All Included">
-          This template include setup for smart contracts, subgraph (contract
-          api) and frontend. All is setup as a monorepo with a shared common
-          library.
+          This template include setup for smart contracts and frontend. All is
+          setup as a monorepo with a shared common library.
         </Feature>
         <Feature title="PWA ready: 100% Lighthouse score">
           The web app is fully PWA compliant, with offline caching, etc... The
@@ -88,12 +87,6 @@
           for contract deployment,
           <a
             class="text-blue-600"
-            href="https://thegraph.com"
-            target="_blank"
-            rel="noopener">The Graph</a>
-          for contract api,
-          <a
-            class="text-blue-600"
             href="https://svelte.dev"
             target="_blank"
             rel="noopener">svelte</a>
@@ -114,8 +107,7 @@
             href="https://snowpack.dev"
             target="_blank"
             rel="noopener">Snowpack</a>
-          es module hot reload. On subgraph changes, the graph get updated and
-          reexecuted.
+          es module hot reload.
         </Feature>
         <Feature title="Fully IPFS Ready">
           Fully IPFS ready with proper url routing. The web app works on both
@@ -135,7 +127,7 @@
         </Feature>
         <Feature title="One command deploy">
           Everything is setup, except for the private ENV variable to deploy the
-          contracts, the subgraph and the web app, all at once. It also include
+          contracts and the web app, all at once. It also include
           <a
             class="text-blue-600"
             href="https://fleek.co"
