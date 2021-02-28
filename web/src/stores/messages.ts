@@ -5,6 +5,7 @@ import type {
   Subscriber,
   Unsubscriber,
 } from 'web3w/dist/esm/utils/internals';
+import {MESSAGES} from '../graphql_endpoints';
 import {QueryState, QueryStore, queryStore} from '../lib/graphql';
 import {transactions} from './wallet';
 
@@ -123,6 +124,7 @@ class MessagesStore implements QueryStore<Messages> {
 }
 
 const query = queryStore<Messages>(
+  MESSAGES,
   `
 query {
   messageEntries(orderBy: timestamp, orderDirection: desc, first: 10) {
