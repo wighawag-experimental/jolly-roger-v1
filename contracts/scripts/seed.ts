@@ -1,4 +1,5 @@
-import {getUnnamedAccounts, ethers} from 'hardhat';
+import {getUnnamedAccounts, deployments} from 'hardhat';
+const {execute} = deployments;
 
 const messages = [
   'Hello',
@@ -10,20 +11,18 @@ const messages = [
   'नमस्ते',
 ];
 
-function waitFor<T>(p: Promise<{wait: () => Promise<T>}>): Promise<T> {
-  return p.then((tx) => tx.wait());
-}
-
 async function main() {
   const others = await getUnnamedAccounts();
   for (let i = 0; i < messages.length; i++) {
     const sender = others[i];
     if (sender) {
-      const greetingsRegistryContract = await ethers.getContract(
+      await execute(
         'GreetingsRegistry',
-        sender
+        {from: sender, log: true},
+        'setMessage',
+        messages[i]
       );
-      await waitFor(greetingsRegistryContract.setMessage(messages[i]));
+      await execute('SimpleERC721', {from: sender, log: true}, 'mint');
     }
   }
 }
