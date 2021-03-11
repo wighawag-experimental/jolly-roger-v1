@@ -1,7 +1,10 @@
 import {BaseStore} from '../lib/utils/stores';
 import {queryNFTsOf, NFTQueryResult} from '../queries/nftsof';
 
-function fixURI(uri: string): string {
+function fixURI(uri?: string): string {
+  if (!uri) {
+    return ''; // TODO error image
+  }
   if (uri.startsWith('ipfs://')) {
     return 'https://ipfs.io/ipfs/' + uri.slice(7);
   }
@@ -50,7 +53,7 @@ class NFTOfStore extends BaseStore<NFTs> {
             tokenURI,
             name: json.name,
             description: json.description,
-            image: fixURI(json.image),
+            image: fixURI(json.image || json.image_url),
           });
         } catch (e) {
           newResult.push({
@@ -66,7 +69,12 @@ class NFTOfStore extends BaseStore<NFTs> {
         newResult.push({
           id: token.id,
           tokenURI: '',
-          name: '',
+          name:
+            token.contract.id === '0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85'
+              ? 'One ENS Name'
+              : token.contract.name
+              ? 'One ' + token.contract.name
+              : 'Unknown',
           description: '',
           image: '',
         });
@@ -94,7 +102,7 @@ class NFTOfStore extends BaseStore<NFTs> {
   }
 
   start(): NFTOfStore | void {
-    // console.log('start');
+    console.log('start ' + this.currentOwner);
     this.setPartial({state: 'Loading'});
     this._fetch();
     this.timer = setInterval(() => this._fetch(), 5000); // TODO polling interval config
@@ -103,7 +111,7 @@ class NFTOfStore extends BaseStore<NFTs> {
 
   async _fetch() {
     const owner = this.currentOwner;
-    // console.log({owner});
+    console.log({owner});
     if (owner) {
       const result = await queryNFTsOf(owner);
       // console.log({result});
@@ -118,7 +126,7 @@ class NFTOfStore extends BaseStore<NFTs> {
   }
 
   stop() {
-    // console.log('stop');
+    console.log('stop ' + this.currentOwner);
     if (this.timer) {
       clearInterval(this.timer);
       this.timer = undefined;
@@ -130,7 +138,11 @@ class NFTOfStore extends BaseStore<NFTs> {
   }
 }
 
-// export const nftsof = new NFTOfStore();
+const cache: {[owner: string]: NFTOfStore} = {};
 export function nftsof(owner?: string): NFTOfStore {
-  return new NFTOfStore(owner);
+  const fromCache = cache[owner || ''];
+  if (fromCache) {
+    return fromCache;
+  }
+  return (cache[owner || ''] = new NFTOfStore(owner));
 }
