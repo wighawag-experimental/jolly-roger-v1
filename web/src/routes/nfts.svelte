@@ -1,26 +1,36 @@
 <script lang="ts">
   import WalletAccess from '../templates/WalletAccess.svelte';
   import NavButton from '../components/navigation/NavButton.svelte';
-  import {nfts} from '../stores/nfts';
+  import {nftsof} from '../stores/nftsof';
   import {wallet, flow, chain} from '../stores/wallet';
 
-  nfts.fetch();
+  $: nfts = nftsof($wallet.address);
 </script>
 
 <WalletAccess>
-  <section class="py-8 px-4">
-    {#if !$nfts.state}
+  <section class="py-8 px-4 text-black dark:text-white">
+    {#if $nfts.state === 'Idle'}
       <div>NFTS not loaded</div>
     {:else if $nfts.error}
       <div>Error: {$nfts.error}</div>
-    {:else if $nfts.state === 'Fetching'}
+    {:else if $nfts.state === 'Loading'}
       <div>Loading NFTs...</div>
-    {:else if !$nfts.data}
-      <div>Error: Could Not Get NFTs</div>
     {:else}
-      {#each $nfts.data as nft, index}
-        <img alt={nft.name} src={nft.image} />
-      {/each}
+      {#each $nfts.tokens as nft, index}
+        {#if nft.error}
+          Error for
+          {nft.id}
+        {:else}
+          <div
+            class="w-20 h-20 border-gray-400 dark:border-gray-700 border-4 p-1 text-center">
+            <img
+              style="image-rendering: pixelated;"
+              class="object-contain h-full w-full"
+              alt={nft.name}
+              src={nft.image} />
+          </div>
+        {/if}
+      {:else}You do not have any NFT{/each}
     {/if}
   </section>
 

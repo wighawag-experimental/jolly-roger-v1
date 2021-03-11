@@ -98,4 +98,23 @@ export class EndPoint {
       },
     };
   }
+
+  fetch<
+    Data extends Record<string, unknown>,
+    Variables extends Record<string, unknown> = Record<string, unknown>
+  >(args: {
+    query: DocumentNode | string;
+    variables?: Variables;
+    context?: Partial<OperationContext>;
+  }): Promise<Data> {
+    return this.client
+      .query(args.query, args.variables, args.context)
+      .toPromise()
+      .then((v) => {
+        if (v.error) {
+          throw v.error;
+        }
+        return v.data;
+      });
+  }
 }

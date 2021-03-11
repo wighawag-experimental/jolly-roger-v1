@@ -23,7 +23,7 @@
   globalQueryStrings={['subgraph', 'debug', 'log', 'trace', '_d_eruda']}>
   <Notifications />
   <NavBar
-    links={[{name: 'index', title: 'Home'}, {name: 'demo', title: 'Demo'}, {name: 'nfts', title: 'NFTs'}]} />
+    links={[{name: 'index', title: 'Home'}, {name: 'demo', title: 'Demo'}, {name: 'nfts', title: 'My NFTs'}]} />
   <CurrentPage>
     <Loading />
     Loading...
