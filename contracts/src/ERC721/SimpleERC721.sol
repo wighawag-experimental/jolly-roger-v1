@@ -63,8 +63,12 @@ contract SimpleERC721 is ERC721Base {
         return id == 0x01ffc9a7 || id == 0x80ac58cd || id == 0x5b5e139f;
     }
 
-    function mint() external {
-        uint256 id = _lastId++;
-        _mint(msg.sender, id);
+    function mint(uint256 num) external {
+        uint256 id = _lastId;
+        for (uint256 i = 0; i < num; i++) {
+            id++;
+            _mint(msg.sender, id);
+        }
+        _lastId = id;
     }
 }

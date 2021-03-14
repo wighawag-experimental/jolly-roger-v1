@@ -18,7 +18,7 @@ async function main() {
     if (sender) {
       await execute(
         'GreetingsRegistry',
-        {from: sender, log: true},
+        {from: sender, log: true, autoMine: true},
         'setMessage',
         messages[i]
       );
