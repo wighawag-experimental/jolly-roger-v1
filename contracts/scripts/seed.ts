@@ -22,7 +22,7 @@ async function main() {
         'setMessage',
         messages[i]
       );
-      await execute('SimpleERC721', {from: sender, log: true}, 'mint');
+      await execute('SimpleERC721', {from: sender, log: true}, 'mint', 5);
     }
   }
 }
