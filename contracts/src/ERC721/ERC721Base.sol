@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-1.0
-pragma solidity 0.7.1;
+pragma solidity 0.7.6;
 
 // from https://github.com/thesandboxgame/sandbox-smart-contracts/blob/87de31e72d1d45c9df0cd3984aa2fcc793c51213/src/solc_0.7/common/BaseWithStorage/ERC721BaseToken.sol
 
