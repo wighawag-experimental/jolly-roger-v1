@@ -10,6 +10,14 @@ to make an app out of it, execute the following
 npx degit wighawag/jolly-roger <your-app-folder>
 ```
 
+There also more templates available in branches:
+
+## NFT version (it includes eip-721-subgraph and a basic "my nfts" page):
+
+```
+npx degit wighawag/jolly-roger#nft <your-app-folder>
+```
+
 ---
 
 <br/>
@@ -43,7 +51,7 @@ If you prefer (or do not have access to docker/docker-compose) you can run them 
 ## intall dependencies :
 
 ```bash
-pnpm setup
+pnpm run setup
 ```
 
 This will set the app name (and change the files to reflect that) and then call `pnpm install`
