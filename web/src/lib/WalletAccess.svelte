@@ -65,7 +65,7 @@
       Wrong network, use
       {chainName}
     </p>
-  </div> -->
+  </div>
 {/if}
 
 {#if $flow.inProgress}
