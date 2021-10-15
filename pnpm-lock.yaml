@@ -70,6 +70,7 @@ importers:
       hardhat: ^2.6.4
       hardhat-deploy: ^0.9.3
       hardhat-gas-reporter: ^1.0.4
+      jolly-roger-common: workspace:*
       mocha: ^9.1.2
       prettier: ^2.4.1
       prettier-plugin-solidity: ^1.0.0-beta.18
@@ -101,6 +102,7 @@ importers:
       hardhat: 2.6.5
       hardhat-deploy: 0.9.3_hardhat@2.6.5
       hardhat-gas-reporter: 1.0.4_hardhat@2.6.5
+      jolly-roger-common: link:../common-lib
       mocha: 9.1.2
       prettier: 2.4.1
       prettier-plugin-solidity: 1.0.0-beta.18_prettier@2.4.1
@@ -177,7 +179,7 @@ importers:
       tslib: ^2.3.1
       typescript: ^4.4.4
       vite: 2.6.7
-      web3w: ^0.3.2-beta.7
+      web3w: ^0.3.2-beta.8
       web3w-torus-loader: ^0.3.1
       web3w-walletconnect-loader: ^0.3.1
       wonka: ^4.0.15
@@ -193,7 +195,7 @@ importers:
       '@urql/devtools': 2.0.3_@urql+core@2.3.3+graphql@15.6.1
       graphql: 15.6.1
       named-logs: 0.1.0
-      web3w: 0.3.2-beta.7_5c043d418860e5468b6969654e29daa7
+      web3w: 0.3.2-beta.8_5c043d418860e5468b6969654e29daa7
       web3w-torus-loader: 0.3.1
       web3w-walletconnect-loader: 0.3.1
       wonka: 4.0.15
@@ -14309,8 +14311,8 @@ packages:
       named-logs: 0.1.0
     dev: false
 
-  /web3w/0.3.2-beta.7_5c043d418860e5468b6969654e29daa7:
-    resolution: {integrity: sha512-CUl2QoZ/udJOHUnJHrfPBQa9msLAw3iWE6/+ajwkB6fr6xCr8M1u4uNuTLJmgA7qUBIFyb71RpDbAxEiHEh5zQ==}
+  /web3w/0.3.2-beta.8_5c043d418860e5468b6969654e29daa7:
+    resolution: {integrity: sha512-Uiie6pu9IzyG04jS2eQryh5VoJbWuXeTQPlg3AZHMet/R40F3PDqeXETBxu5tg/2lwW38fCfHdtzTNz9lGYtAQ==}
     peerDependencies:
       '@ethersproject/abi': ^5.0.0
       '@ethersproject/bignumber': ^5.0.0
