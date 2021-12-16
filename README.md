@@ -142,6 +142,15 @@ This will compile the common library and terminate
 This will deploy the contract on localhost and watch for changes and recompile/redeploy when so.
 <br/><br/>
 
+`pnpm contracts:fork:deploy <network>`
+
+This will deploy the contract on a fork of the network specified
+
+If network is a live network, an url will be required. the following env need to be set:
+
+- `ETH_NODE_URI_<network name>`
+  <br/><br/>
+
 `pnpm contracts:deploy [<network>]`
 
 This will deploy the contract on the network specified.
@@ -149,6 +158,15 @@ This will deploy the contract on the network specified.
 If network is a live network, a mnemonic and url will be required. the following env need to be set:
 
 - `MNEMONIC_<network name>`
+- `ETH_NODE_URI_<network name>`
+  <br/><br/>
+
+`pnpm contracts:fork:execute <network> contracts/<path-to-scripts>`
+
+This will execute the script against a fork of the specified network.
+
+If network is a live network, an url will be required. the following env need to be set:
+
 - `ETH_NODE_URI_<network name>`
   <br/><br/>
 
