@@ -20,7 +20,7 @@ const config: HardhatUserConfig = {
         settings: {
           optimizer: {
             enabled: true,
-            runs: 2000,
+            runs: 999999,
           },
         },
       },
@@ -57,10 +57,6 @@ const config: HardhatUserConfig = {
     staging: {
       url: node_url('rinkeby'),
       accounts: accounts('rinkeby'),
-    },
-    production: {
-      url: node_url('mainnet'),
-      accounts: accounts('mainnet'),
     },
     mainnet: {
       url: node_url('mainnet'),
