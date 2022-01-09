@@ -6,6 +6,7 @@
   import NavButton from '$lib/components/styled/navigation/NavButton.svelte';
   import Feature from '$lib/components/styled/Feature.svelte';
   import {url} from '$lib/utils/url';
+import { base } from '$app/paths';
   const name = 'Jolly Roger';
 
   function _select(elem: HTMLElement) {
@@ -81,7 +82,7 @@
       <div class="mt-12 max-w-lg mx-auto grid gap-5 lg:grid-cols-3 lg:max-w-none">
         <div class="flex flex-col rounded-lg shadow-lg dark:shadow-slate-400 dark:shadow-sm overflow-hidden">
           <div class="flex-shrink-0">
-            <a href="https://bleeps.art" target="_blank"><img class="h-48 w-full object-cover" src="https://bleeps.art/preview.png" alt=""></a>
+            <a href="https://bleeps.art" target="_blank"><img class="h-48 w-full object-cover" src={`${base}/images/bleeps-preview.png`} alt=""></a>
           </div>
           <div class="flex-1 bg-white dark:bg-black p-6 flex flex-col justify-between">
             <div class="flex-1">
@@ -107,7 +108,7 @@
 
         <div class="flex flex-col rounded-lg shadow-lg dark:shadow-slate-400 dark:shadow-sm overflow-hidden">
           <div class="flex-shrink-0">
-            <a href="https://mandalas.eth.limo" target="_blank"><img class="h-48 w-full object-cover" src="https://mandalas.eth.limo/preview.png" alt=""></a>
+            <a href="https://mandalas.eth.limo" target="_blank"><img class="h-48 w-full object-cover" src={`${base}/images/mandalas-preview.png`} alt=""></a>
           </div>
           <div class="flex-1 bg-white dark:bg-black p-6 flex flex-col justify-between">
             <div class="flex-1">
@@ -133,7 +134,7 @@
 
         <div class="flex flex-col rounded-lg shadow-lg dark:shadow-slate-400 dark:shadow-sm overflow-hidden">
           <div class="flex-shrink-0">
-            <a href="https://conquest.eth.limo" target="_blank"><img class="h-48 w-full object-cover" src="https://conquest.eth.limo/preview.png" alt=""></a>
+            <a href="https://conquest.eth.limo" target="_blank"><img class="h-48 w-full object-cover" src={`${base}/images/conquest-preview.png`} alt=""></a>
           </div>
           <div class="flex-1 bg-white dark:bg-black p-6 flex flex-col justify-between">
             <div class="flex-1">
@@ -246,7 +247,7 @@
         </svg>
       </a>
       <a
-        href="https://ronan.eth.link"
+        href="https://ronan.eth.limo"
         class="text-gray-400 hover:text-gray-500">
         <span class="sr-only">Web</span>
         <svg
