@@ -22,25 +22,7 @@ function copyFromDefault(p) {
   copyUnlessExists(`${p}.default`, p);
 }
 
-function copyPrettierFixVSCodeSettings(p) {
-  if (fs.existsSync('_prettier-vscode-fix/vscode-settings.json')) {
-    if (!fs.existsSync(`${p}/.vscode`)) {
-      fs.mkdirSync(`${p}/.vscode`);
-    }
-  }
-  copyUnlessExists(
-    '_prettier-vscode-fix/vscode-settings.json',
-    `${p}/.vscode/settings.json`
-  );
-}
-
-['jolly-roger.code-workspace', '.env', '.env.production', '.env.staging'].map(
-  copyFromDefault
-);
-
-['common-lib', 'contracts', 'subgraph', 'web'].map(
-  copyPrettierFixVSCodeSettings
-);
+['jolly-roger.code-workspace', '.env', '.env.production', '.env.staging'].map(copyFromDefault);
 
 switch (process.platform) {
   case 'win32':
@@ -58,7 +40,8 @@ switch (process.platform) {
       '.newsh.json',
       `
   {
-    "terminalApp": "xterm"
+    "terminalApp": "xterm",
+    "terminalAppSetup": "-hold -e {{command}}"
   }
   `
     );
