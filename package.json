@@ -6,7 +6,7 @@
   "devDependencies": {
     "change-name": "^0.2.6",
     "cross-env": "^7.0.3",
-    "eip721-subgraph": "^0.1.7",
+    "eip721-subgraph": "^0.1.10",
     "subgraph-deploy": "^0.0.4",
     "dotenv": "^10.0.0",
     "dotenv-cli": "^4.1.1",

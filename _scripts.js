@@ -300,7 +300,7 @@ async function performAction(rawArgs) {
     execute(`newsh "npm run contracts:node"`);
     execute(`newsh "npm run contracts:local:dev -- --reset"`);
     execute(`newsh "npm run subgraph:dev"`);
-    await execute('npm run subgraph:upload:eip721');
+    await execute('wait-on web/src/lib/contracts.json && npm run subgraph:upload:eip721');
     await performAction(['common:build']);
     await performAction(['contracts:seed', 'localhost', '--waitContracts']);
   } else if (firstArg === 'start') {
@@ -312,6 +312,7 @@ async function performAction(rawArgs) {
     execute(`newsh "npm run contracts:node"`);
     execute(`newsh "npm run contracts:local:dev -- --reset"`);
     execute(`newsh "npm run subgraph:dev"`);
+    await execute('wait-on web/src/lib/contracts.json && npm run subgraph:upload:eip721');
     await performAction(['common:build']);
     await performAction(['contracts:seed', 'localhost', '--waitContracts']);
   } else if (firstArg === 'start:geth') {
@@ -322,7 +323,7 @@ async function performAction(rawArgs) {
     execute(`newsh "npm run web:dev localhost -- --skipContracts --waitContracts ${extra.join(' ')}"`);
     execute(`newsh "npm run contracts:local:dev -- --reset"`);
     execute(`newsh "npm run subgraph:dev"`);
-    await execute('npm run subgraph:upload:eip721');
+    await execute('wait-on web/src/lib/contracts.json && npm run subgraph:upload:eip721');
     await performAction(['common:build']);
     await performAction(['contracts:seed', 'localhost', '--waitContracts']);
   }

@@ -8,7 +8,7 @@ importers:
       cross-env: ^7.0.3
       dotenv: ^10.0.0
       dotenv-cli: ^4.1.1
-      eip721-subgraph: ^0.1.7
+      eip721-subgraph: ^0.1.10
       npm-run-all: ^4.1.5
       rimraf: ^3.0.2
       subgraph-deploy: ^0.0.4
@@ -20,7 +20,7 @@ importers:
       cross-env: 7.0.3
       dotenv: 10.0.0
       dotenv-cli: 4.1.1
-      eip721-subgraph: 0.1.9
+      eip721-subgraph: 0.1.10
       npm-run-all: 4.1.5
       rimraf: 3.0.2
       subgraph-deploy: 0.0.4
@@ -5077,8 +5077,8 @@ packages:
     resolution: {integrity: sha1-WQxhFWsK4vTwJVcyoViyZrxWsh0=}
     dev: true
 
-  /eip721-subgraph/0.1.9:
-    resolution: {integrity: sha512-8aR+DbkPjhlz3mI/XQmSL2D1xnky11OnzH22vPDDNzu4BcLV2VtfUi4AnpNL7M17RXi5aljvUr8adUi1Wq11uw==}
+  /eip721-subgraph/0.1.10:
+    resolution: {integrity: sha512-EiQD3OWnDw9vKUqSwIHLNE2rS2roZAUCfWELuXYhfecY22mEqRRmRCKnN6NrkCCmzz8/dWbwnyHOJP/VkErybw==}
     dev: true
 
   /ejs/2.7.4:
