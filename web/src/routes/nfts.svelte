@@ -1,8 +1,8 @@
 <script lang="ts">
-  import WalletAccess from '$lib/WalletAccess.svelte';
-  import NavButton from '$lib/components/navigation/NavButton.svelte';
+  import WalletAccess from '$lib/blockchain/WalletAccess.svelte';
+  import NavButton from '$lib/components/styled/navigation/NavButton.svelte';
   import {nftsof} from '$lib/stores/nftsof';
-  import {wallet, flow, chain} from '$lib/stores/wallet';
+  import {wallet, flow, chain} from '$lib/blockchain/wallet';
 
   $: nfts = nftsof($wallet.address);
 </script>

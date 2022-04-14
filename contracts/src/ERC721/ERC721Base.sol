@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-1.0
-pragma solidity 0.7.6;
+pragma solidity 0.8.9;
 
 // from https://github.com/thesandboxgame/sandbox-smart-contracts/blob/87de31e72d1d45c9df0cd3984aa2fcc793c51213/src/solc_0.7/common/BaseWithStorage/ERC721BaseToken.sol
 
@@ -54,7 +54,7 @@ contract ERC721Base is IERC721 {
     /// @param id The id of the token.
     function approve(address operator, uint256 id) external override {
         uint256 ownerData = _owners[_storageId(id)];
-        address owner = address(ownerData);
+        address owner = address(uint160(ownerData));
         require(owner != address(0), "NONEXISTENT_TOKEN");
         require(owner == msg.sender || _operatorsForAll[owner][msg.sender], "UNAUTHORIZED_APPROVAL");
         _approveFor(ownerData, operator, id);
@@ -72,7 +72,7 @@ contract ERC721Base is IERC721 {
         uint256 ownerData = _owners[_storageId(id)];
         require(sender != address(0), "ZERO_ADDRESS_SENDER");
         require(msg.sender == sender || _operatorsForAll[sender][msg.sender], "UNAUTHORIZED_APPROVAL");
-        require(address(ownerData) == sender, "OWNER_NOT_SENDER");
+        require(address(uint160(ownerData)) == sender, "OWNER_NOT_SENDER");
         _approveFor(ownerData, operator, id);
     }
 
@@ -257,9 +257,9 @@ contract ERC721Base is IERC721 {
         bool hasOperator
     ) internal virtual {
         if (hasOperator) {
-            _owners[_storageId(id)] = (oldData & NOT_ADDRESS) | OPERATOR_FLAG | uint256(newOwner);
+            _owners[_storageId(id)] = (oldData & NOT_ADDRESS) | OPERATOR_FLAG | uint256(uint160(newOwner));
         } else {
-            _owners[_storageId(id)] = ((oldData & NOT_ADDRESS) & NOT_OPERATOR_FLAG) | uint256(newOwner);
+            _owners[_storageId(id)] = ((oldData & NOT_ADDRESS) & NOT_OPERATOR_FLAG) | uint256(uint160(newOwner));
         }
     }
 
@@ -280,7 +280,7 @@ contract ERC721Base is IERC721 {
         address operator,
         uint256 id
     ) internal {
-        address owner = address(ownerData);
+        address owner = address(uint160(ownerData));
         if (operator == address(0)) {
             _updateOwnerData(id, ownerData, owner, false);
         } else {
@@ -336,7 +336,7 @@ contract ERC721Base is IERC721 {
     function _mint(address owner, uint256 id) internal {
         uint256 storageId = _storageId(id);
         require(_owners[storageId] == 0, "ALREADY_MINTED");
-        _owners[storageId] = uint256(owner);
+        _owners[storageId] = uint256(uint160(owner));
         _numNFTPerAddress[owner]++;
         emit Transfer(address(0), owner, id);
     }
@@ -396,7 +396,7 @@ contract ERC721Base is IERC721 {
         if ((data & BURNED_FLAG) == BURNED_FLAG) {
             return address(0);
         }
-        return address(data);
+        return address(uint160(data));
     }
 
     /// @dev Get the owner and operatorEnabled status of a token.
@@ -408,7 +408,7 @@ contract ERC721Base is IERC721 {
         if ((data & BURNED_FLAG) == BURNED_FLAG) {
             owner = address(0);
         } else {
-            owner = address(data);
+            owner = address(uint160(data));
         }
         operatorEnabled = (data / OPERATOR_FLAG) == 1;
     }

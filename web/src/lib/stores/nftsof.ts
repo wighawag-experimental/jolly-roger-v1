@@ -1,8 +1,10 @@
-import {writable, Writable} from 'svelte/store';
+import type {Writable} from 'svelte/store';
+import {writable} from 'svelte/store';
 import type {Invalidator, Subscriber, Unsubscriber} from 'web3w/dist/esm/utils/internals';
-import {NFTS_ENDPOINT} from '$lib/graphql';
-import {HookedQueryStore, QueryState, QueryStore} from '$lib/utils/stores/graphql';
-import {chainTempo} from './chainTempo';
+import {NFTS_ENDPOINT} from '$lib/blockchain/subgraph';
+import type {QueryState, QueryStore} from '$lib/utils/stores/graphql';
+import {HookedQueryStore} from '$lib/utils/stores/graphql';
+import {chainTempo} from '$lib/blockchain/chainTempo';
 
 function fixURI(uri?: string): string {
   if (!uri) {
