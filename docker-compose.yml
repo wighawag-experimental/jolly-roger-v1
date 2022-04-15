@@ -1,7 +1,7 @@
 version: '3'
 services:
   graph-node:
-    image: graphprotocol/graph-node:fraction
+    image: graphprotocol/graph-node:434d71c
     extra_hosts:
       - 'host.docker.internal:host-gateway'
     ports:
@@ -20,6 +20,7 @@ services:
       postgres_db: graph-node
       ipfs: 'ipfs:5001'
       ethereum: 'mainnet:http://host.docker.internal:8545'
+      GRAPH_GETH_ETH_CALL_ERRORS: 'Error: Transaction reverted' # for graph-node to detect tx failure with hardhat
       # RUST_LOG: trace
       # RUST_BACKTRACE: full
 

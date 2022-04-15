@@ -6,11 +6,6 @@ import "./ERC721Base.sol";
 contract SimpleERC721 is ERC721Base {
     uint256 _lastId;
 
-    function doAllAddressesOwnTheirIdByDefault() external pure returns (bool) {
-        // NOTE needed because for some reason graph-node fails with hardhat when trying to call with `contract.try_doAllAddressesOwnTheirIdByDefault`
-        return false;
-    }
-
     function uint2str(uint256 num) private pure returns (string memory _uintAsString) {
         unchecked {
             if (num == 0) {
