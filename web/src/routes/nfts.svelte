@@ -11,18 +11,39 @@
   let tokenID: string | undefined;
   let contractAddress: string | undefined;
 
-  onMount(() => {
+  function hashchange() {
     const str = typeof location !== 'undefined' ? location.hash.substr(1) : '';
     if (str) {
       const splited = str.split('_');
       contractAddress = splited[0];
       tokenID = splited[1];
+    } else {
+      contractAddress = undefined;
+      tokenID = undefined;
     }
     console.log({tokenID});
+  }
+
+  onMount(() => {
+    hashchange();
   });
 </script>
 
+
+<svelte:window on:hashchange={hashchange}/>
+
 {#if tokenID}
+<div class="w-32  text-black dark:text-white ">
+
+    <div>
+      <NavButton
+        label="all nfts"
+        href="#"
+      >
+        Your NFTs
+      </NavButton>
+    </div>
+</div>
   <Erc721TokenUri {contractAddress} {tokenID} />
 {:else}
   <WalletAccess>
