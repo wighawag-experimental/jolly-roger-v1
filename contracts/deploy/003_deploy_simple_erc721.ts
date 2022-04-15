@@ -7,9 +7,12 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   const {deployer} = await getNamedAccounts();
 
+  const dev = !hre.network.live;
+
   await deploy('SimpleERC721', {
     from: deployer,
     log: true,
+    proxy: dev,
   });
 };
 export default func;
