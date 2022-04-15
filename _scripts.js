@@ -175,6 +175,7 @@ async function performAction(rawArgs) {
       await execute(`wait-on web/src/lib/contracts.json`);
     }
     await execute(`${env}npm --prefix contracts run execute ${network} scripts/seed.ts ${extra.join(' ')}`);
+    await execute(`${env}npm --prefix contracts run execute ${network} scripts/mint_erc721.ts`);
   } else if (firstArg === 'contracts:execute') {
     const {fixedArgs, extra, options} = parseArgs(args, 1, {waitContracts: 'boolean'});
     const network = fixedArgs[0] || 'localhost';

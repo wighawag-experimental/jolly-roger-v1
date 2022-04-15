@@ -6,26 +6,33 @@ import "./ERC721Base.sol";
 contract SimpleERC721 is ERC721Base {
     uint256 _lastId;
 
+    function doAllAddressesOwnTheirIdByDefault() external pure returns (bool) {
+        // NOTE needed because for some reason graph-node fails with hardhat when trying to call with `contract.try_doAllAddressesOwnTheirIdByDefault`
+        return false;
+    }
+
     function uint2str(uint256 num) private pure returns (string memory _uintAsString) {
-        if (num == 0) {
-            return "0";
-        }
+        unchecked {
+            if (num == 0) {
+                return "0";
+            }
 
-        uint256 j = num;
-        uint256 len;
-        while (j != 0) {
-            len++;
-            j /= 10;
-        }
+            uint256 j = num;
+            uint256 len;
+            while (j != 0) {
+                len++;
+                j /= 10;
+            }
 
-        bytes memory bstr = new bytes(len);
-        uint256 k = len - 1;
-        while (num != 0) {
-            bstr[k--] = bytes1(uint8(48 + (num % 10)));
-            num /= 10;
-        }
+            bytes memory bstr = new bytes(len);
+            uint256 k = len - 1;
+            while (num != 0) {
+                bstr[k--] = bytes1(uint8(48 + (num % 10)));
+                num /= 10;
+            }
 
-        return string(bstr);
+            return string(bstr);
+        }
     }
 
     function tokenURI(uint256 tokenId) external pure returns (string memory) {
