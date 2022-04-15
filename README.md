@@ -281,3 +281,9 @@ Vercal can be easily setup like fleek above. THe only thing needed currently is 
 - `npx pnpm i`
 
 And like fleek you ll need to setup `NETWORK_NAME` env variable unless it is the same as the branch name.
+
+# verifcation of contracts on local blockscout
+
+```
+pnpm etherscan-verify localhost -- --api-url http://localhost:4000 --license None --force-license
+```
